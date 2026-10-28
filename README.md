@@ -1,58 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Paham, ini sudah saya susun ulang agar jauh lebih rapi, enak dibaca, dan diberi jarak yang pas.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Saya juga sudah menambahkan penjelasan singkat di bagian awal (seperti membuka terminal sebelum melakukan *clone*), serta syarat aplikasi apa saja yang minimal harus sudah ter-install di laptop tanpa harus mengajarinya dari nol.
 
-## About Laravel
+Berikut hasilnya:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+🏢 **VISAwork - Financial Management Platform**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+VISAwork adalah platform manajemen keuangan dan operasional usaha berbasis web yang dirancang dengan tampilan bersih, responsif, dan profesional (enterprise-grade).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+🛠️ **Tech Stack & Environment**
 
-## Learning Laravel
+* 🖥️ **Framework:** Laravel 13
+* 🔐 **Authentication:** Laravel Breeze
+* 🎨 **Styling:** Tailwind CSS (Font: Inter)
+* 🗄️ **Database:** MySQL / MariaDB (via Laragon & HeidiSQL)
+* ⚡ **Asset Bundler:** Vite
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+🚀 **Panduan Memulai (Setup Project)**
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+⚠️ **Persiapan Awal:**
+Pastikan di komputer atau laptop kamu sudah ter-install aplikasi dasar seperti **Git**, **Composer**, **Node.js**, dan lokal server seperti **Laragon** atau **XAMPP**.
 
-## Agentic Development
+Jika sudah siap, ikuti langkah-langkah di bawah ini:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+**1. Clone & Tarik Repositori**
+Buka **Terminal**, **Git Bash**, atau **Command Prompt** (CMD). Arahkan ke folder tempat kamu biasa menyimpan project kodingan, lalu ketik perintah berikut:
 
-```bash
-composer require laravel/boost --dev
+`git clone https://github.com/ridwanpauji/VISAwork-999.git`
+`cd VISAwork-999`
+`git pull origin main`
 
-php artisan boost:install
-```
+**2. Install Dependensi PHP & Frontend**
+Masih di dalam terminal yang sama, kamu perlu mengunduh semua *library* pendukung project ini.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Install library PHP (Laravel & Breeze):
+`composer install`
 
-## Contributing
+Install & Build asset Tailwind CSS:
+`npm install`
+`npm run build`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**3. Konfigurasi Environment (.env)**
+Sekarang kita perlu mengatur koneksi project ke komputermu. Ketik perintah ini di terminal:
 
-## Code of Conduct
+`cp .env.example .env`
+`php artisan key:generate`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Setelah itu, buka file `.env` di text editor kamu (misalnya VS Code). Cari bagian database, dan pastikan isinya seperti ini:
 
-## Security Vulnerabilities
+`DB_CONNECTION=mysql`
+`DB_HOST=127.0.0.1`
+`DB_PORT=3306`
+`DB_DATABASE=visawork`
+`DB_USERNAME=root`
+`DB_PASSWORD=`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**4. Migration & Import Database**
+Langkah selanjutnya adalah membuat struktur tabel di database. Jalankan perintah ini di terminal:
 
-## License
+`php artisan migrate:fresh`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+*(Opsional) Jika Ingin Menggunakan Data Akun Test:*
+Agar tidak perlu buat akun dari awal, kamu bisa memasukkan data yang sudah ada:
+
+* Buka aplikasi database kamu (HeidiSQL / phpMyAdmin).
+* Pilih database bernama `visawork`.
+* Klik menu **File**, lalu pilih **Run SQL file...** (atau tab Import di phpMyAdmin).
+* Pilih file `database.sql` yang ada di dalam folder utama project ini.
+
+**5. Jalankan Server Lokal**
+Agar website bisa dibuka di browser, kamu harus menyalakan dua server secara bersamaan. Silakan buka **dua jendela terminal baru** yang mengarah ke folder project ini.
+
+Terminal 1 (Untuk menjalankan Backend PHP):
+`php artisan serve`
+
+Terminal 2 (Untuk memuat perubahan desain / UI):
+`npm run dev`
+
+Terakhir, buka browser favoritmu dan ketik alamat ini: **http://localhost:8000**
+
+---
+
+✨ **Ringkasan Perubahan UI & Database**
+
+* 🔤 **Typography:** Seluruh aplikasi menggunakan font *Inter* dari Google Fonts untuk pembacaan angka dan teks finansial yang lebih presisi.
+* 🖼️ **Hero Section:** Spacing atas disesuaikan, pemotongan baris judul dibuat seimbang, badge status tanpa titik indikator, serta preview gambar menggunakan *soft drop-shadow* tanpa garis tepi yang kaku.
+* 🗃️ **Database Architecture:** Kolom ID pada tabel users sudah diubah menggunakan format standar Laravel Breeze (`BIGINT UNSIGNED AUTO_INCREMENT`) untuk mencegah error ketidakcocokan tipe data saat membuat relasi antar tabel (Foreign Key).
+
+---
+
+🤝 **Workflow Kolaborasi Git (Wajib Bagi Tim)**
+
+Agar progres kodingan dan isi database di semua laptop anggota tim selalu sama dan tidak bentrok, biasakan rutinitas berikut:
+
+**A. Sebelum Mulai Koding (Setiap Awal Sesi):**
+Buka terminal dan tarik update terbaru dari teman satu tim kamu:
+
+`git pull origin main`
+`composer install`
+`npm install && npm run build`
+`php artisan migrate`
+
+**B. Setelah Selesai Koding / Update Fitur:**
+Apakah kamu menambahkan tabel atau data penting di database hari ini? Jika iya, **wajib** export database `visawork` dari HeidiSQL, lalu simpan dengan nama `database.sql` di folder utama project (timpa file yang lama).
+
+Setelah itu, simpan semua perubahan kodingan kamu dengan perintah:
+
+`git add .`
+`git commit -m "feat: penjelasan singkat tentang apa yang kamu kerjakan"`
+`git push origin main`
