@@ -59,63 +59,62 @@
         </div>
     </nav>
 
-    <!-- 2. HERO SECTION (LEBIH KE ATAS & FONT INTER) -->
-    <section class="max-w-7xl mx-auto px-6 md:px-12 min-h-[calc(100vh-140px)] flex items-center pt-8 pb-16 w-full">
-        <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full">
-            
-            <!-- Kolom Kiri: Teks (Sejajar dengan Logo VISAwork di Navbar) -->
-            <div class="lg:col-span-6 text-left">
-    <!-- 1. Badge Status (Diberi Jarak & Muted Green) -->
-    <div class="mb-6">
-        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-emerald-800 bg-emerald-500/10 border border-emerald-600/15 rounded-full">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-            Tahap Pengembangan v0.1.0
-        </span>
-    </div>
-
-    <!-- 2. Judul Utama (Line Break Rapi & Seimbang) -->
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 tracking-tight mb-6 leading-[1.2]">
-        Kelola Keuangan<br class="hidden sm:block">
-        <span class="font-bold text-gray-900">Dalam Satu Tempat</span>
-    </h1>
-
-    <!-- 3. Deskripsi Singkat (Ukuran Pas & Renggang) -->
-    <p class="text-sm md:text-base text-gray-600 max-w-lg mb-8 leading-relaxed font-normal">
-        Ringkasan finansial, arus kas, hingga pencatatan stok barang dalam tampilan bersih, cepat, dan teratur.
-    </p>
-
-    <!-- 4. Tombol Akses (Lebih Pas & Modern) -->
-    <div class="flex items-center gap-4">
-        <a href="/register" class="px-7 py-3 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-medium rounded-lg transition shadow-sm">
-            Mulai Sekarang
-        </a>
+    <!-- HERO SECTION (REVISI HERO KIRI & FOTO KANAN) -->
+<section class="max-w-7xl mx-auto px-6 md:px-12 min-h-[calc(100vh-140px)] flex items-center pt-6 pb-16 w-full">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full">
         
-        <a href="#fitur" class="group inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:border-emerald-600/30 hover:bg-emerald-50/50 transition">
-            <span>Pelajari Fitur</span>
-            <svg class="w-4 h-4 text-gray-400 group-hover:text-emerald-600 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </a>
-    </div>
-</div>
-
-            <!-- Kolom Kanan: Preview Gambar (PORSCHE / DASHBOARD) -->
-            <div class="lg:col-span-6">
-                <div class="p-2.5 bg-emerald-900/5 rounded-2xl border border-emerald-900/5 shadow-xs">
-                    <img src="{{ asset('img/porsche.jpg') }}" 
-                         alt="Preview VISAwork" 
-                         class="w-full h-auto rounded-xl shadow-sm border border-emerald-900/5 object-cover"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-
-                    <!-- Fallback jika gambar porsche belum dimasukkan -->
-                    <div class="bg-white rounded-xl py-32 px-8 border border-emerald-900/5 text-center text-gray-400 font-normal text-sm hidden">
-                        [ Preview Interface ]
-                    </div>
-                </div>
+        <!-- Kolom Kiri: Teks & Informasi (Sejajar Logo Navbar) -->
+        <div class="lg:col-span-6 text-left">
+            <!-- Badge tanpa titik bulat -->
+            <div class="mb-6">
+                <span class="inline-block px-3.5 py-1 text-xs font-medium text-emerald-800 bg-emerald-500/10 rounded-full border border-emerald-600/15">
+                    Tahap Pengembangan v0.1.0
+                </span>
             </div>
 
+            <!-- Judul Utama (Proporsi Font Inter Pas & Rapi) -->
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 tracking-tight mb-6 leading-[1.25]">
+                Kelola Keuangan<br class="hidden sm:block">
+                <span class="font-bold text-gray-750">Dengan VISAwork</span>
+            </h1>
+
+            <!-- Sub-deskripsi -->
+            <p class="text-sm md:text-base text-gray-600 max-w-lg mb-8 leading-relaxed font-normal">
+                Ringkasan finansial, arus kas, hingga pencatatan stok barang dalam tampilan bersih, cepat, dan teratur.
+            </p>
+
+            <!-- Tombol Akses -->
+            <div class="flex items-center gap-4">
+                <a href="/register" class="px-7 py-3 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-medium rounded-lg transition shadow-sm">
+                    Mulai Sekarang
+                </a>
+                
+                <a href="#fitur" class="group inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:border-emerald-600/30 hover:bg-emerald-50/50 transition">
+                    <span>Pelajari Fitur</span>
+                    <svg class="w-4 h-4 text-gray-400 group-hover:text-emerald-600 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </a>
+            </div>
         </div>
-    </section>
+
+        <!-- Kolom Kanan: Preview Gambar (Tanpa Border, Dikasih Soft Shadow) -->
+        <div class="lg:col-span-6">
+            <div class="rounded-2xl shadow-xl shadow-gray-200/60 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-gray-300/50">
+                <img src="{{ asset('img/porsche.jpg') }}" 
+                     alt="Preview VISAwork" 
+                     class="w-full h-auto object-cover block"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+                <!-- Fallback kalau gambar belum kebaca -->
+                <div class="bg-white py-36 px-8 text-center text-gray-400 font-normal text-sm hidden">
+                    [ Preview Interface ]
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
     <!-- 3. FITUR UTAMA -->
     <section id="fitur" class="bg-emerald-50/30 py-28 border-t border-emerald-900/5 min-h-screen flex items-center">
