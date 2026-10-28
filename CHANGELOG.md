@@ -14,3 +14,9 @@ Semua perubahan penting pada project VISAwork akan dicatat di file ini.
 
 ### Diperbaiki (Fixed)
 - (Belum ada perbaikan sistem/bug)
+
+## COMMAND PENTING LE SEBELUM PULL PROJECT INI
+
+- composer install
+- npm install && npm run build
+- php artisan migrate:fresh
