@@ -309,7 +309,7 @@
                 "about-list2": "Dukungan teknis berkelanjutan",
                 "about-btn": "Kenali Kami Lebih Lanjut",
 
-                "footer-text": "VISAwork v0.1.0 &copy; 2026. Hak Cipta Dilindungi."
+                "footer-text": "VISAwork v1.0.0 &copy; 2026. Hak Cipta Dilindungi."
             },
             en: {
                 "nav-fitur": "Features",
