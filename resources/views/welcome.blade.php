@@ -97,7 +97,7 @@
             <div class="lg:col-span-6 text-left">
                 <div class="mb-6">
                     <span data-i18n="hero-badge" class="inline-block px-3.5 py-1.5 text-xs font-medium text-emerald-800 bg-emerald-100 rounded-full border border-emerald-200">
-                        Tahap Pengembangan v0.1.0
+                        Tahap Pengembangan v1.0.0
                     </span>
                 </div>
 
@@ -281,7 +281,7 @@
                 "nav-login": "Masuk",
                 "nav-register": "Daftar Akun",
                 
-                "hero-badge": "Tahap Pengembangan v0.1.0",
+                "hero-badge": "Tahap Pengembangan v1.0.0",
                 "hero-title": "Kelola Keuangan<br class='hidden sm:block'><span class='font-bold text-gray-800'>Dengan VISAwork</span>",
                 "hero-desc": "Ringkasan finansial, arus kas, hingga pencatatan stok barang dalam tampilan bersih, cepat, dan teratur tanpa kerumitan.",
                 "btn-start": "Mulai Sekarang",
@@ -320,7 +320,7 @@
                 "nav-login": "Sign In",
                 "nav-register": "Create Account",
                 
-                "hero-badge": "Development Phase v0.1.0",
+                "hero-badge": "Development Phase v1.0.0",
                 "hero-title": "Manage Finances<br class='hidden sm:block'><span class='font-bold text-gray-800'>With VISAwork</span>",
                 "hero-desc": "Financial summaries, cash flows, and inventory tracking in a clean, fast, and organized interface without the hassle.",
                 "btn-start": "Get Started",
