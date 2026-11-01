@@ -1,9 +1,3 @@
-Paham, ini sudah saya susun ulang agar jauh lebih rapi, enak dibaca, dan diberi jarak yang pas.
-
-Saya juga sudah menambahkan penjelasan singkat di bagian awal (seperti membuka terminal sebelum melakukan *clone*), serta syarat aplikasi apa saja yang minimal harus sudah ter-install di laptop tanpa harus mengajarinya dari nol.
-
-Berikut hasilnya:
-
 🏢 **VISAwork - Financial Management Platform**
 
 VISAwork adalah platform manajemen keuangan dan operasional usaha berbasis web yang dirancang dengan tampilan bersih, responsif, dan profesional (enterprise-grade).
