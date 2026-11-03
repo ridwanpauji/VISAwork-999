@@ -22,3 +22,15 @@ Semua perubahan penting pada proyek VISAwork dicatat dalam dokumen ini.
   - Mengubah struktur kolom id pada tabel users dari CHAR(36) (UUID) menjadi BIGINT UNSIGNED AUTO_INCREMENT untuk menyelesaikan konflik QueryException.
   - Menyelesaikan masalah skema Foreign Key yang tidak kompatibel pada tabel relasi goals.
 - Database Dump: Menambahkan file database.sql ke dalam repositori untuk mempermudah sinkronisasi data awal antar kolaborator.
+
+
+[v1.1.0] - 2026-11-01
+Autentikasi & UI Halaman
+Halaman Login & Register: Menyesuaikan tampilan antarmuka agar selaras dengan tema landing page VISAwork, mengganti logo Laravel dengan logo resmi VISAwork, serta mengubah warna fokus dan tombol menjadi warna emerald.
+
+Multi-Bahasa: Memperluas fitur pilihan bahasa (Indonesia dan English US) ke halaman Login, Register, dan Dasbor menggunakan LocalStorage agar preferensi bahasa tetap tersimpan saat berpindah halaman.
+
+Dasbor & Fungsionalitas
+Dashboard Utama: Merombak tata letak halaman dasbor standar Laravel Breeze menjadi ikhtisar keuangan profesional yang mencakup kartu ringkasan saldo, statistik arus kas, tombol aksi cepat, dan riwayat transaksi terakhir.
+
+Notifikasi Pengembangan: Menambahkan sistem peringatan (toast pop-up) interaktif pada tombol-tombol aksi cepat di dasbor untuk menginformasikan fitur yang masih dalam tahap pengembangan.

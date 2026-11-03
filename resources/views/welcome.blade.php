@@ -97,7 +97,7 @@
             <div class="lg:col-span-6 text-left">
                 <div class="mb-6">
                     <span data-i18n="hero-badge" class="inline-block px-3.5 py-1.5 text-xs font-medium text-emerald-800 bg-emerald-100 rounded-full border border-emerald-200">
-                        Tahap Pengembangan v1.0.0
+                        Tahap Pengembangan v1.1.0
                     </span>
                 </div>
 
@@ -266,7 +266,7 @@
 
     <!-- FOOTER -->
     <footer data-i18n="footer-text" class="bg-gray-900 py-10 text-center text-sm font-normal text-gray-400">
-        VISAwork v1.0.0 &copy; 2026. Hak Cipta Dilindungi.
+        VISAwork v1.1.0 &copy; 2026. Hak Cipta Dilindungi.
     </footer>
 
     <!-- SCRIPT MULTI-BAHASA -->
@@ -281,7 +281,7 @@
                 "nav-login": "Masuk",
                 "nav-register": "Daftar Akun",
                 
-                "hero-badge": "Tahap Pengembangan v1.0.0",
+                "hero-badge": "Tahap Pengembangan v1.1.0",
                 "hero-title": "Kelola Keuangan<br class='hidden sm:block'><span class='font-bold text-gray-800'>Dengan VISAwork</span>",
                 "hero-desc": "Ringkasan finansial, arus kas, hingga pencatatan stok barang dalam tampilan bersih, cepat, dan teratur tanpa kerumitan.",
                 "btn-start": "Mulai Sekarang",
@@ -309,7 +309,7 @@
                 "about-list2": "Dukungan teknis berkelanjutan",
                 "about-btn": "Kenali Kami Lebih Lanjut",
 
-                "footer-text": "VISAwork v1.0.0 &copy; 2026. Hak Cipta Dilindungi."
+                "footer-text": "VISAwork v1.1.0 &copy; 2026. Hak Cipta Dilindungi."
             },
             en: {
                 "nav-fitur": "Features",
@@ -320,7 +320,7 @@
                 "nav-login": "Sign In",
                 "nav-register": "Create Account",
                 
-                "hero-badge": "Development Phase v1.0.0",
+                "hero-badge": "Development Phase v1.1.0",
                 "hero-title": "Manage Finances<br class='hidden sm:block'><span class='font-bold text-gray-800'>With VISAwork</span>",
                 "hero-desc": "Financial summaries, cash flows, and inventory tracking in a clean, fast, and organized interface without the hassle.",
                 "btn-start": "Get Started",
@@ -348,11 +348,14 @@
                 "about-list2": "Continuous technical support",
                 "about-btn": "Get to Know Us Better",
 
-                "footer-text": "VISAwork v1.0.0 &copy; 2026. All Rights Reserved."
+                "footer-text": "VISAwork v1.1.0 &copy; 2026. All Rights Reserved."
             }
         };
 
         function changeLanguage(lang) {
+            // Simpan ke localStorage agar tidak lupa saat pindah halaman
+            localStorage.setItem('visawork_lang', lang);
+
             // Update tulisan di UI
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
@@ -367,6 +370,12 @@
             // Ubah atribut lang di tag html
             document.documentElement.lang = lang;
         }
+
+        // Jalankan otomatis saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('visawork_lang') || 'id';
+            changeLanguage(savedLang);
+        });
     </script>
 </body>
 </html>
