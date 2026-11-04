@@ -11,17 +11,25 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navigation Links (Desktop) -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex h-full">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="focus:border-emerald-500 hover:border-emerald-300">
                         <span data-i18n="nav-dashboard">{{ __('Dashboard') }}</span>
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')" class="focus:border-emerald-500 hover:border-emerald-300">
+                        <span data-i18n="nav-transactions">Transaksi</span>
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')" class="focus:border-emerald-500 hover:border-emerald-300">
+                        <span data-i18n="nav-inventory">Inventaris</span>
                     </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown & Bahasa -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
-                
+
                 <!-- MENU BAHASA (ID/EN) -->
                 <div class="relative group cursor-pointer z-50">
                     <button class="flex items-center gap-1 px-2 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600 transition">
@@ -66,7 +74,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();" class="hover:bg-red-50 hover:text-red-600">
+                                onclick="event.preventDefault(); this.closest('form').submit();" class="hover:bg-red-50 hover:text-red-600">
                                 <span data-i18n="nav-logout">{{ __('Log Out') }}</span>
                             </x-dropdown-link>
                         </form>
@@ -82,6 +90,52 @@
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Responsive Navigation Menu (Mobile View) -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-gray-200 bg-white">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <span data-i18n="nav-dashboard">{{ __('Dashboard') }}</span>
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
+                <span data-i18n="nav-transactions">Transaksi</span>
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')">
+                <span data-i18n="nav-inventory">Inventaris</span>
+            </x-responsive-nav-link>
+        </div>
+
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="px-4 flex items-center justify-between">
+                <div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
+                <!-- Choice Language Mobile -->
+                <div class="flex gap-2 text-sm font-medium">
+                    <button onclick="changeLanguage('id')" class="px-2 py-1 bg-gray-100 rounded hover:bg-emerald-100 hover:text-emerald-600 transition">ID</button>
+                    <button onclick="changeLanguage('en')" class="px-2 py-1 bg-gray-100 rounded hover:bg-emerald-100 hover:text-emerald-600 transition">EN</button>
+                </div>
+            </div>
+
+            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('profile.edit')">
+                    <span data-i18n="nav-profile">{{ __('Profile') }}</span>
+                </x-responsive-nav-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-responsive-nav-link :href="route('logout')"
+                        onclick="event.preventDefault(); this.closest('form').submit();">
+                        <span data-i18n="nav-logout">{{ __('Log Out') }}</span>
+                    </x-responsive-nav-link>
+                </form>
             </div>
         </div>
     </div>

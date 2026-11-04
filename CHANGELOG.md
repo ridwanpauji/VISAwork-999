@@ -34,3 +34,19 @@ Dasbor & Fungsionalitas
 Dashboard Utama: Merombak tata letak halaman dasbor standar Laravel Breeze menjadi ikhtisar keuangan profesional yang mencakup kartu ringkasan saldo, statistik arus kas, tombol aksi cepat, dan riwayat transaksi terakhir.
 
 Notifikasi Pengembangan: Menambahkan sistem peringatan (toast pop-up) interaktif pada tombol-tombol aksi cepat di dasbor untuk menginformasikan fitur yang masih dalam tahap pengembangan.
+
+[v1.2.0] - 2026-11-04
+Modul Transaksi & Arus Kas
+Halaman Transaksi: Membuat antarmuka pencatatan arus kas berbasis tabel profesional, dilengkapi filter status (Semua, Pemasukan, Pengeluaran) dan kolom pencarian.
+
+Form Transaksi: Menambahkan modal pop-up interaktif untuk input transaksi baru (Pemasukan/Pengeluaran, Nominal, Deskripsi, Kategori).
+
+Modul Inventaris & Produk
+Halaman Inventaris: Membuat antarmuka manajemen produk dan stok barang, lengkap dengan kartu ringkasan (Total Jenis Produk, Peringatan Stok Menipis, dan Estimasi Nilai Aset).
+
+Form Produk: Menambahkan modal pop-up untuk pendaftaran produk baru beserta informasi SKU, harga jual, dan kuantitas awal.
+
+Navigasi & Integrasi Multi-Bahasa
+Navbar Utama: Memperbarui navigasi header dan menu seluler (mobile) dengan menambahkan tautan langsung ke modul Transaksi dan Inventaris.
+
+Sinkronisasi Bahasa: Memperluas kamus terjemahan (ID/EN) di seluruh halaman modul baru agar pilihan bahasa tetap tersimpan secara permanen melalui LocalStorage.

@@ -146,6 +146,8 @@
         const translations = {
             id: {
                 "nav-dashboard": "Dasbor",
+                "nav-transactions": "Transaksi",
+                "nav-inventory": "Inventaris",
                 "nav-profile": "Profil",
                 "nav-logout": "Keluar",
                 "dash-title": "Ikhtisar Keuangan",
@@ -178,6 +180,8 @@
             },
             en: {
                 "nav-dashboard": "Dashboard",
+                "nav-transactions": "Transactions",
+                "nav-inventory": "Inventory",
                 "nav-profile": "Profile",
                 "nav-logout": "Log Out",
                 "dash-title": "Financial Overview",
@@ -214,15 +218,15 @@
             localStorage.setItem('visawork_lang', lang);
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if(translations[lang][key]) {
+                if(translations[lang] && translations[lang][key]) {
                     element.innerHTML = translations[lang][key];
                 }
             });
-            document.getElementById('current-lang').innerText = lang.toUpperCase();
+            const currentLangEl = document.getElementById('current-lang');
+            if(currentLangEl) currentLangEl.innerText = lang.toUpperCase();
             document.documentElement.lang = lang;
         }
 
-        // Terapkan bahasa terakhir & Toast logic
         let toastTimeout;
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('visawork_lang') || 'id';
