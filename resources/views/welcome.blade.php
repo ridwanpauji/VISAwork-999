@@ -37,7 +37,7 @@
             
             <!-- Logo VISAwork -->
             <a href="#" class="flex items-center gap-2 text-xl font-semibold tracking-tight text-gray-900 shrink-0">
-                <img src="{{ asset('img/visaworklogo.png') }}" alt="Logo VISAwork" class="h-8 w-auto">
+                <img src="/img/visaworklogo.png" alt="Logo VISAwork" class="h-8 w-auto">
                 <span>VISA<span class="text-emerald-600 font-normal">work</span></span>
             </a>
             
