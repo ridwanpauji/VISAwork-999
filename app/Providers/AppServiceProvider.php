@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\URL; // <-- 1. Pastikan baris ini ada
+use Illuminate\Support\Facades\URL; // 1. Tambahkan baris ini
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,8 +14,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // 2. Paksa semua URL asset & route menjadi HTTPS saat diakses via Ngrok/Proxy
-        if (request()->hasHeader('x-forwarded-proto') || config('app.env') !== 'local') {
+        // Paksa HTTPS saat diakses via Ngrok, Reverse Proxy, atau Environment non-local
+        if (request()->hasHeader('x-forwarded-proto') || str_contains(request()->getHost(), 'ngrok') || config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
     }

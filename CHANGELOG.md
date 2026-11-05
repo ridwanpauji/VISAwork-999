@@ -50,3 +50,19 @@ Navigasi & Integrasi Multi-Bahasa
 Navbar Utama: Memperbarui navigasi header dan menu seluler (mobile) dengan menambahkan tautan langsung ke modul Transaksi dan Inventaris.
 
 Sinkronisasi Bahasa: Memperluas kamus terjemahan (ID/EN) di seluruh halaman modul baru agar pilihan bahasa tetap tersimpan secara permanen melalui LocalStorage.
+
+[v1.3.0] - 2026-11-05
+Stabilitas Database, Integrasi Ngrok & Production Asset
+- Database Migration Fix:
+  - Memperbaiki konflik tipe data Foreign Key pada 11 tabel finansial (goals, net_worths, assets, liabilities, balances, budgets, payments, incomes, expenses) dari CHAR(36) ke BIGINT UNSIGNED agar sesuai dengan tabel induk users.
+  - Berhasil menyelesaikan eksekusi seluruh migrasi skema keuangan tanpa konflik.
+- Database Seeder & Akun Demo:
+  - Memperbaiki UserSeeder agar kompatibel dengan struktur ID auto-increment.
+  - Berhasil melakukan seeding akun default testing (admin@visawork.com / password) serta data awal arus kas (metode pembayaran, pemasukan, pengeluaran, anggaran) via FinanceSeeder.
+- Integrasi Reverse Proxy & Ngrok:
+  - Menambahkan konfigurasi trustProxies(at: '*') pada bootstrap/app.php untuk mendukung header proxy Ngrok.
+  - Memperbarui AppServiceProvider dengan URL::forceScheme('https') saat terdeteksi koneksi Ngrok untuk mencegah pemblokiran konten campuran (Mixed Content Blocking).
+- Frontend & Aset Produksi:
+  - Mengompilasi seluruh aset Tailwind CSS & JS ke folder public/build/ (npm run build) sehingga tampilan Login, Register, dan Dasbor tetap rapi dan tidak berantakan saat diakses pihak luar via link Ngrok.
+  - Memperbaiki sintaks tag HTML gambar preview pada welcome.blade.php.
+  - Menyelaraskan nama model Product.php sesuai konvensi PSR-4.
