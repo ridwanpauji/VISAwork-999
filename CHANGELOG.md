@@ -66,3 +66,21 @@ Stabilitas Database, Integrasi Ngrok & Production Asset
   - Mengompilasi seluruh aset Tailwind CSS & JS ke folder public/build/ (npm run build) sehingga tampilan Login, Register, dan Dasbor tetap rapi dan tidak berantakan saat diakses pihak luar via link Ngrok.
   - Memperbaiki sintaks tag HTML gambar preview pada welcome.blade.php.
   - Menyelaraskan nama model Product.php sesuai konvensi PSR-4.
+
+## [v1.4.0] - 2026-11-11
+### Integrasi Backend Penuh, Visual Refinement & Standarisasi Fungsionalitas
+- **Full Backend Integration (Transisi dari Mockup/Simulasi ke Sistem Riil):**
+  - **Modul Transaksi (`/transactions`):** Mengganti modal simulasi "Tahap Pengembangan" dengan fungsionalitas CRUD nyata. Menambahkan migrasi tabel `transactions` (`user_id`, `type`, `description`, `category`, `amount`, `transaction_date`, `notes`), implementasi `TransactionController`, form validasi, filter dinamis (Semua, Pemasukan, Pengeluaran), fitur pencarian, dan pagination terintegrasi database.
+  - **Modul Inventaris (`/inventory`):** Menghubungkan tabel `products` secara multi-user (`user_id`, `sku`, `category`), kalkulasi metrik riil (Total Jenis Produk, Peringatan Stok Menipis `< 5`, Estimasi Nilai Aset Fisik `price * stock`), serta aksi edit/hapus produk.
+  - **Dasbor Finansial Terpadu (`/dashboard`):** Menghubungkan kartu ringkasan saldo aktif, pemasukan bulan berjalan, dan pengeluaran bulan berjalan langsung ke agregasi database. Menghubungkan tombol "Aksi Cepat" dengan modal pencatatan instan.
+- **Penyempurnaan Visual Grafik Statistik Arus Kas (Chart.js Revamp):**
+  - Memperbaiki bug sumbu Y (skala `0` hingga `1`) saat data transaksi kosong dengan menyediakan `suggestedMax` dinamis dan format nominal adaptif (`rb`, `jt`).
+  - Menambahkan switcher periode waktu (7 Hari Terakhir, 30 Hari, dan Tahun Berjalan) yang dinamis dari backend controller.
+  - Menyediakan seeder data demonstrasi awal pada `FinanceSeeder` agar visualisasi grafik langsung menyajikan tren bar riil (Pemasukan vs Beban Operasional).
+  - Merombak topbar kartu grafik dan memindahkan legenda Chart.js ke elemen HTML UI terstruktur yang selaras dengan tema sistem.
+- **UI/UX & Desain Visual:**
+  - **Palet Warna Nyaman di Mata (Eye-Friendly Tone):** Mengganti latar belakang putih menyilaukan dengan palet netral Slate-50 (`#F8FAFC`) dan kartu kontras elegan `#FFFFFF` dengan aksen border halus Slate-200.
+  - **Hero Section:** Mengganti foto mobil lawas dengan screenshot preview antarmuka aplikasi nyata (`dashboard-preview.png`), disajikan dalam frame mock-up profesional yang bersih tanpa elemen bergaya platform tertentu (non-OS specific).
+- **Arsitektur Multi-Bahasa Terpusat:**
+  - Membuat `public/js/translations.js` sebagai single source of truth untuk kamus terjemahan Bahasa Indonesia & English.
+  - Menyelesaikan bug desinkronisasi bahasa saat berpindah halaman atau menekan tombol alih bahasa (ID ↔ EN). Preferensi bahasa tersimpan konsisten di `localStorage`.

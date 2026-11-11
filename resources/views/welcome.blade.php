@@ -11,11 +11,9 @@
             theme: {
                 extend: {
                     colors: {
-                        lightbg: '#F8F9FA', 
-                        brand: {
-                            DEFAULT: '#059669',
-                            hover: '#047857',
-                        }
+                        slatebg: '#F8FAFC',
+                        surface: '#FFFFFF',
+                        borderSubtle: '#E2E8F0',
                     }
                 }
             }
@@ -29,25 +27,23 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-lightbg text-gray-700 transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden">
+<body class="bg-slate-50 text-slate-700 transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden antialiased">
 
     <!-- 1. NAVBAR -->
-    <nav class="bg-white/90 backdrop-blur-md border-b border-gray-200 py-4 sticky top-0 z-50">
+    <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 py-3.5 sticky top-0 z-50">
         <div class="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
             
             <!-- Logo VISAwork -->
-            <a href="#" class="flex items-center gap-2 text-xl font-semibold tracking-tight text-gray-900 shrink-0">
+            <a href="#" class="flex items-center gap-2 text-xl font-semibold tracking-tight text-slate-900 shrink-0">
                 <img src="{{ asset('img/visaworklogo.png') }}" alt="Logo VISAwork" class="h-8 w-auto">
                 <span>VISA<span class="text-emerald-600 font-normal">work</span></span>
             </a>
             
             <!-- Menu Navigasi -->
-            <div class="hidden lg:flex items-center space-x-10 text-sm font-medium text-gray-600">
+            <div class="hidden lg:flex items-center space-x-9 text-sm font-medium text-slate-600">
                 <a href="#fitur" data-i18n="nav-fitur" class="hover:text-emerald-600 transition-colors py-1">Fitur</a>
-                <a href="#solusi" data-i18n="nav-solusi" class="hover:text-emerald-600 transition-colors py-1">Solusi</a>
-                <a href="#harga" data-i18n="nav-harga" class="hover:text-emerald-600 transition-colors py-1">Harga</a>
-                <a href="#panduan" data-i18n="nav-panduan" class="hover:text-emerald-600 transition-colors py-1">Panduan</a>
-                <a href="#tentang" data-i18n="nav-perusahaan" class="hover:text-emerald-600 transition-colors py-1">Perusahaan</a>
+                <a href="#keunggulan" data-i18n="nav-keunggulan" class="hover:text-emerald-600 transition-colors py-1">Keunggulan</a>
+                <a href="#tentang" data-i18n="nav-tentang" class="hover:text-emerald-600 transition-colors py-1">Tentang Kami</a>
             </div>
 
             <!-- Autentikasi & Bahasa -->
@@ -55,85 +51,98 @@
                 
                 <!-- PILIHAN BAHASA -->
                 <div class="relative group cursor-pointer">
-                    <button class="flex items-center gap-1 px-2 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600 transition">
+                    <button class="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:text-emerald-700 rounded-lg bg-slate-100 hover:bg-slate-200/70 transition border border-slate-200/60">
                         <span id="current-lang">ID</span>
-                        <svg class="w-4 h-4 text-gray-400 group-hover:text-emerald-600 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"></path>
+                        <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                     
                     <!-- Dropdown Bahasa -->
-                    <div class="absolute right-0 mt-2 w-36 bg-white border border-gray-100 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                    <div class="absolute right-0 mt-2 w-36 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
                         <div class="py-1">
-                            <button onclick="changeLanguage('id')" class="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-emerald-600 transition">
+                            <button onclick="changeLanguage('id')" class="w-full text-left flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition">
                                 <span>🇮🇩</span> Indonesia
                             </button>
-                            <button onclick="changeLanguage('en')" class="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-emerald-600 transition">
+                            <button onclick="changeLanguage('en')" class="w-full text-left flex items-center gap-2 px-4 py-2 text-xs font-medium text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition">
                                 <span>🇺🇸</span> English (US)
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tombol Pemisah vertikal -->
-                <div class="hidden md:block w-px h-5 bg-gray-300"></div>
+                <!-- Pemisah vertikal -->
+                <div class="hidden sm:block w-px h-5 bg-slate-200"></div>
 
                 <!-- Tombol Login & Register -->
-                <a href="/login" data-i18n="nav-login" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-emerald-600 transition hidden sm:block">
+                <a href="/login" data-i18n="nav-login" class="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-emerald-700 transition hidden sm:block">
                     Masuk
                 </a>
-                <a href="/register" data-i18n="nav-register" class="px-5 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-md transition shadow-sm">
+                <a href="/register" data-i18n="nav-register" class="px-5 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition shadow-sm">
                     Daftar Akun
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="relative max-w-[1440px] mx-auto px-6 md:px-12 min-h-[calc(100vh-140px)] flex items-center pt-12 pb-20 w-full">
+    <!-- 2. HERO SECTION -->
+    <section class="relative max-w-[1440px] mx-auto px-6 md:px-12 min-h-[calc(100vh-140px)] flex items-center pt-10 pb-20 w-full">
         <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center w-full z-10">
             
-            <!-- Kolom Kiri: Teks -->
+            <!-- Kolom Kiri: Teks & Nilai Utama -->
             <div class="lg:col-span-6 text-left">
-                <div class="mb-6">
-                    <span data-i18n="hero-badge" class="inline-block px-3.5 py-1.5 text-xs font-medium text-emerald-800 bg-emerald-100 rounded-full border border-emerald-200">
-                        Tahap Pengembangan v1.1.0
+                <div class="mb-5">
+                    <span data-i18n="hero-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-emerald-800 bg-emerald-100/70 rounded-full border border-emerald-200/80">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Platform Pembukuan Digital Modern
                     </span>
                 </div>
 
-                <h1 data-i18n="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-gray-900 tracking-tight mb-6 leading-[1.2]">
+                <h1 data-i18n="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tight mb-6 leading-[1.18]">
                     Kelola Keuangan<br class="hidden sm:block">
-                    <span class="font-bold text-gray-800">Dengan VISAwork</span>
+                    <span class="font-bold text-slate-800">Bisnis Tanpa Ribet</span>
                 </h1>
 
-                <p data-i18n="hero-desc" class="text-base md:text-lg text-gray-600 max-w-xl mb-8 leading-relaxed font-normal">
-                    Ringkasan finansial, arus kas, hingga pencatatan stok barang dalam tampilan bersih, cepat, dan teratur tanpa kerumitan.
+                <p data-i18n="hero-desc" class="text-base md:text-lg text-slate-600 max-w-xl mb-8 leading-relaxed font-normal">
+                    Pencatatan arus kas debit/kredit, pantau saldo aktif, hingga manajemen inventaris barang dalam satu antarmuka yang bersih, cepat, dan nyaman di mata.
                 </p>
 
-                <div class="flex items-center gap-4">
-                    <a href="/register" data-i18n="btn-start" class="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition shadow-sm">
+                <div class="flex flex-wrap items-center gap-3.5">
+                    <a href="/register" data-i18n="btn-start" class="px-7 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition shadow-sm">
                         Mulai Sekarang
                     </a>
                     
-                    <a href="#fitur" class="group inline-flex items-center gap-2 px-7 py-3.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:border-gray-300 hover:bg-gray-50 transition shadow-sm">
+                    <a href="#fitur" class="group inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-300 text-slate-700 text-sm font-medium rounded-lg hover:border-slate-400 hover:bg-slate-50 transition shadow-sm">
                         <span data-i18n="btn-learn">Pelajari Fitur</span>
-                        <svg class="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 9l-7 7-7-7"></path>
+                        <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </a>
                 </div>
+
+                <!-- Mini Social Proof / Checklist -->
+                <div class="mt-8 pt-6 border-t border-slate-200/70 flex flex-wrap gap-6 text-xs text-slate-500">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Gratis Akun Bisnis</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Ringkasan Otomatis</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Penyimpanan Aman</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Kolom Kanan: Preview Gambar -->
+            <!-- Kolom Kanan: Preview Gambar UI Asli -->
             <div class="lg:col-span-6 relative">
-                <div class="rounded-2xl border border-gray-200 overflow-hidden transition-all duration-300 bg-white">
-                    <img src="{{ asset('img/porsche.jpg') }}" 
-                         alt="Preview VISAwork" 
-                         class="w-full h-auto object-cover block"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="bg-gray-100 py-40 px-8 text-center text-gray-400 font-normal text-sm hidden">
-                        [ Preview Interface ]
-                    </div>
+                <div class="rounded-xl border border-slate-200 shadow-md overflow-hidden bg-white">
+                    <img src="{{ asset('img/dashboard-preview.png') }}" 
+                         alt="Preview Dashboard VISAwork" 
+                         class="w-full h-auto object-cover block">
                 </div>
             </div>
 
@@ -141,45 +150,47 @@
     </section>
 
     <!-- 3. FITUR UTAMA -->
-    <section id="fitur" class="bg-white py-24 border-t border-gray-200">
+    <section id="fitur" class="bg-white py-20 border-t border-slate-200/80">
         <div class="max-w-[1440px] mx-auto px-6 md:px-12 w-full">
-            <div class="text-center mb-16">
-                <h2 data-i18n="feat-title" class="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">Fitur Utama Platform</h2>
-                <p data-i18n="feat-desc" class="text-gray-500 text-base font-normal max-w-2xl mx-auto leading-relaxed">Dirancang untuk mempermudah pencatatan dan operasional harian Anda.</p>
+            <div class="text-center mb-14">
+                <h2 data-i18n="feat-title" class="text-3xl md:text-4xl font-semibold text-slate-900 mb-3 tracking-tight">Fitur Utama Platform</h2>
+                <p data-i18n="feat-desc" class="text-slate-500 text-sm md:text-base font-normal max-w-2xl mx-auto leading-relaxed">Dibuat khusus untuk pengusaha, pemilik toko, dan tim operasional.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Fitur 1 -->
-                <div class="bg-gray-50 rounded-2xl border border-gray-200 hover:border-gray-300 transition duration-300 overflow-hidden flex flex-col hover:shadow-md">
-                    <div class="h-64 bg-gray-200 relative overflow-hidden border-b border-gray-200">
-                        <img src="{{ asset('img/foto-fitur-1.jpg') }}" alt="Pencatatan Finansial" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm hidden">
-                            [ Tempat Foto Fitur 1 ]
-                        </div>
-                    </div>
+                <div class="bg-slate-50/70 rounded-2xl border border-slate-200 hover:border-slate-300 transition duration-300 overflow-hidden flex flex-col hover:shadow-sm">
                     <div class="p-8 md:p-10 flex-1 flex flex-col justify-between">
                         <div>
-                            <span data-i18n="feat1-badge" class="px-3 py-1 text-xs font-medium text-emerald-700 bg-emerald-100 rounded border border-emerald-200 mb-4 inline-block">Modul Utama</span>
-                            <h3 data-i18n="feat1-title" class="font-medium text-gray-900 mb-4 text-xl">Pencatatan & Arus Kas</h3>
-                            <p data-i18n="feat1-desc" class="text-base text-gray-600 leading-relaxed font-normal mb-8">Pengelolaan saldo otomatis, pelacakan histori transaksi debit/kredit, serta pembuatan rekapitulasi harian secara terstruktur.</p>
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-5">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span data-i18n="feat1-badge" class="px-3 py-1 text-xs font-medium text-emerald-800 bg-emerald-100/80 rounded-md border border-emerald-200 mb-3 inline-block">Modul Finansial</span>
+                            <h3 data-i18n="feat1-title" class="font-semibold text-slate-900 mb-3 text-xl">Pencatatan Arus Kas</h3>
+                            <p data-i18n="feat1-desc" class="text-sm text-slate-600 leading-relaxed font-normal mb-6">Hitung saldo aktif otomatis, filter transaksi pemasukan & pengeluaran, serta catat kategori setiap mutasi keuangan bisnis.</p>
                         </div>
+                        <ul class="text-xs text-slate-500 space-y-2 pt-4 border-t border-slate-200/60">
+                            <li class="flex items-center gap-2">✓ Validasi kalkulasi debit & kredit instan</li>
+                            <li class="flex items-center gap-2">✓ Pencarian data histori tanpa hambatan</li>
+                        </ul>
                     </div>
                 </div>
 
                 <!-- Fitur 2 -->
-                <div class="bg-gray-50 rounded-2xl border border-gray-200 hover:border-gray-300 transition duration-300 overflow-hidden flex flex-col hover:shadow-md">
-                    <div class="h-64 bg-gray-200 relative overflow-hidden border-b border-gray-200">
-                        <img src="{{ asset('img/foto-fitur-2.jpg') }}" alt="Manajemen Produk" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="absolute inset-0 bg-gray-100 flex items-center justify-center text-gray-400 text-sm hidden">
-                            [ Tempat Foto Fitur 2 ]
-                        </div>
-                    </div>
+                <div class="bg-slate-50/70 rounded-2xl border border-slate-200 hover:border-slate-300 transition duration-300 overflow-hidden flex flex-col hover:shadow-sm">
                     <div class="p-8 md:p-10 flex-1 flex flex-col justify-between">
                         <div>
-                            <span data-i18n="feat2-badge" class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-200 rounded border border-gray-300 mb-4 inline-block">Inventaris</span>
-                            <h3 data-i18n="feat2-title" class="font-medium text-gray-900 mb-4 text-xl">Manajemen Produk</h3>
-                            <p data-i18n="feat2-desc" class="text-base text-gray-600 leading-relaxed font-normal mb-8">Pengontrolan stok barang masuk dan keluar, penyesuaian harga jual, serta pemantauan stok terkini.</p>
+                            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-5">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                            </div>
+                            <span data-i18n="feat2-badge" class="px-3 py-1 text-xs font-medium text-slate-700 bg-slate-200 rounded-md border border-slate-300 mb-3 inline-block">Inventaris Produk</span>
+                            <h3 data-i18n="feat2-title" class="font-semibold text-slate-900 mb-3 text-xl">Manajemen Stok & Valuasi</h3>
+                            <p data-i18n="feat2-desc" class="text-sm text-slate-600 leading-relaxed font-normal mb-6">Kelola katalog barang, pantau sisa kuantitas barang, estimasi nilai aset fisik, serta peroleh peringatan saat stok mulai habis.</p>
                         </div>
+                        <ul class="text-xs text-slate-500 space-y-2 pt-4 border-t border-slate-200/60">
+                            <li class="flex items-center gap-2">✓ Peringatan otomatis produk stok menipis (&lt; 5)</li>
+                            <li class="flex items-center gap-2">✓ Kalkulasi otomatis estimasi nilai persediaan</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -187,77 +198,55 @@
     </section>
 
     <!-- 4. KEUNGGULAN -->
-    <section id="keunggulan" class="bg-lightbg py-24 border-t border-gray-200">
+    <section id="keunggulan" class="bg-slate-50 py-20 border-t border-slate-200/80">
         <div class="max-w-[1440px] mx-auto px-6 md:px-12 w-full">
-            <div class="text-center mb-16">
-                <h2 data-i18n="adv-title" class="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">Keunggulan Platform</h2>
-                <p data-i18n="adv-desc" class="text-gray-500 text-base font-normal max-w-2xl mx-auto leading-relaxed">Dirancang dengan efisiensi tinggi tanpa beban komputasi berlebih.</p>
+            <div class="text-center mb-14">
+                <h2 data-i18n="adv-title" class="text-3xl md:text-4xl font-semibold text-slate-900 mb-3 tracking-tight">Keunggulan Platform</h2>
+                <p data-i18n="adv-desc" class="text-slate-500 text-sm md:text-base font-normal max-w-2xl mx-auto leading-relaxed">Dirancang dengan antarmuka yang bersih, cepat diakses, dan ramah pengguna.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <!-- Keunggulan 1 -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex items-center">
-                    <div class="w-1/3 h-full bg-gray-100 min-h-[160px] relative border-r border-gray-200">
-                        <img src="{{ asset('img/foto-unggul-1.jpg') }}" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs text-center p-2 hidden">
-                            [ Foto<br>Responsif ]
-                        </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
-                    <div class="p-6 w-2/3">
-                        <h3 data-i18n="adv1-title" class="font-medium text-gray-900 text-lg mb-2">Performa Responsif</h3>
-                        <p data-i18n="adv1-desc" class="text-sm text-gray-600 leading-relaxed font-normal">Ringan dimuat bahkan pada koneksi terbatas berkat arsitektur teroptimasi.</p>
-                    </div>
+                    <h3 data-i18n="adv1-title" class="font-semibold text-slate-900 text-base mb-2">Performa Sangat Ringan</h3>
+                    <p data-i18n="adv1-desc" class="text-xs text-slate-600 leading-relaxed font-normal">Antarmuka cepat terbuka tanpa lag berkat arsitektur Laravel Breeze dan Tailwind CSS.</p>
                 </div>
 
                 <!-- Keunggulan 2 -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex items-center">
-                    <div class="w-1/3 h-full bg-gray-100 min-h-[160px] relative border-r border-gray-200">
-                        <img src="{{ asset('img/foto-unggul-2.jpg') }}" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs text-center p-2 hidden">
-                            [ Foto<br>Keamanan ]
-                        </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
-                    <div class="p-6 w-2/3">
-                        <h3 data-i18n="adv2-title" class="font-medium text-gray-900 text-lg mb-2">Akses Terkontrol</h3>
-                        <p data-i18n="adv2-desc" class="text-sm text-gray-600 leading-relaxed font-normal">Manajemen isolasi data berbasis sesi dan perlindungan autentikasi yang aman.</p>
+                    <h3 data-i18n="adv2-title" class="font-semibold text-slate-900 text-base mb-2">Data Terisolasi Aman</h3>
+                    <p data-i18n="adv2-desc" class="text-xs text-slate-600 leading-relaxed font-normal">Setiap pengguna hanya dapat melihat dan memodifikasi data keuangan miliknya sendiri.</p>
+                </div>
+
+                <!-- Keunggulan 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
                     </div>
+                    <h3 class="font-semibold text-slate-900 text-base mb-2">Bilingual Siap Pakai</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed font-normal">Mendukung peralihan instan Bahasa Indonesia & English US yang tersimpan otomatis di browser.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 5. TENTANG KAMI -->
-    <section id="tentang" class="bg-white py-24 border-t border-gray-200">
+    <section id="tentang" class="bg-white py-20 border-t border-slate-200/80">
         <div class="max-w-[1440px] mx-auto px-6 md:px-12 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Kolom Kiri: Foto Perusahaan -->
-                <div class="relative">
-                    <div class="rounded-2xl overflow-hidden aspect-video lg:aspect-square bg-gray-100 border border-gray-200 shadow-sm relative">
-                        <img src="{{ asset('img/foto-tentang-kami.jpg') }}" alt="Tentang VISAwork" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="absolute inset-0 bg-gray-50 flex items-center justify-center text-gray-400 text-sm hidden">
-                            [ Tempat Foto Tim / Perusahaan ]
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kolom Kanan: Teks -->
-                <div class="text-left">
-                    <h2 data-i18n="about-title" class="text-3xl md:text-4xl font-semibold text-gray-900 mb-6">Mengenai Perusahaan</h2>
-                    <p data-i18n="about-desc" class="text-gray-600 leading-relaxed text-base md:text-lg font-normal mb-8">
-                        VISAwork dikembangkan sebagai solusi perangkat lunak mandiri untuk penataan administrasi keuangan yang transparan, terstruktur, dan terukur. Kami percaya bahwa setiap bisnis membutuhkan fondasi pencatatan yang solid untuk bisa bertumbuh.
-                    </p>
-                    <ul class="space-y-4 mb-10 text-gray-600">
-                        <li class="flex items-center gap-3">
-                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-sm font-bold">✓</span> 
-                            <span data-i18n="about-list1">Misi mempermudah pembukuan</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-sm font-bold">✓</span> 
-                            <span data-i18n="about-list2">Dukungan teknis berkelanjutan</span>
-                        </li>
-                    </ul>
-                    <a href="/register" data-i18n="about-btn" class="inline-block px-8 py-3.5 bg-gray-900 hover:bg-gray-800 text-white text-base font-medium rounded-lg transition shadow-md">
-                        Kenali Kami Lebih Lanjut
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 data-i18n="about-title" class="text-3xl font-semibold text-slate-900 mb-4 tracking-tight">Mengenai VISAwork</h2>
+                <p data-i18n="about-desc" class="text-slate-600 leading-relaxed text-base font-normal mb-8">
+                    VISAwork dikembangkan sebagai solusi perangkat lunak mandiri untuk penataan administrasi keuangan yang transparan, terstruktur, dan terukur. Kami percaya bahwa setiap bisnis membutuhkan fondasi pencatatan yang solid untuk bisa bertumbuh.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="/register" data-i18n="about-btn" class="inline-flex items-center px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition shadow-sm">
+                        Buat Akun Sekarang
                     </a>
                 </div>
             </div>
@@ -265,117 +254,11 @@
     </section>
 
     <!-- FOOTER -->
-    <footer data-i18n="footer-text" class="bg-gray-900 py-10 text-center text-sm font-normal text-gray-400">
-        VISAwork v1.1.0 &copy; 2026. Hak Cipta Dilindungi.
+    <footer class="bg-slate-900 py-8 text-center text-xs font-normal text-slate-400 border-t border-slate-800">
+        VISAwork v1.4.0 &copy; 2026. Platform Manajemen Operasional & Keuangan. Hak Cipta Dilindungi.
     </footer>
 
-    <!-- SCRIPT MULTI-BAHASA -->
-    <script>
-        const translations = {
-            id: {
-                "nav-fitur": "Fitur",
-                "nav-solusi": "Solusi",
-                "nav-harga": "Harga",
-                "nav-panduan": "Panduan",
-                "nav-perusahaan": "Perusahaan",
-                "nav-login": "Masuk",
-                "nav-register": "Daftar Akun",
-                
-                "hero-badge": "Tahap Pengembangan v1.1.0",
-                "hero-title": "Kelola Keuangan<br class='hidden sm:block'><span class='font-bold text-gray-800'>Dengan VISAwork</span>",
-                "hero-desc": "Ringkasan finansial, arus kas, hingga pencatatan stok barang dalam tampilan bersih, cepat, dan teratur tanpa kerumitan.",
-                "btn-start": "Mulai Sekarang",
-                "btn-learn": "Pelajari Fitur",
-
-                "feat-title": "Fitur Utama Platform",
-                "feat-desc": "Dirancang untuk mempermudah pencatatan dan operasional harian Anda.",
-                "feat1-badge": "Modul Utama",
-                "feat1-title": "Pencatatan & Arus Kas",
-                "feat1-desc": "Pengelolaan saldo otomatis, pelacakan histori transaksi debit/kredit, serta pembuatan rekapitulasi harian secara terstruktur.",
-                "feat2-badge": "Inventaris",
-                "feat2-title": "Manajemen Produk",
-                "feat2-desc": "Pengontrolan stok barang masuk dan keluar, penyesuaian harga jual, serta pemantauan stok terkini.",
-
-                "adv-title": "Keunggulan Platform",
-                "adv-desc": "Dirancang dengan efisiensi tinggi tanpa beban komputasi berlebih.",
-                "adv1-title": "Performa Responsif",
-                "adv1-desc": "Ringan dimuat bahkan pada koneksi terbatas berkat arsitektur teroptimasi.",
-                "adv2-title": "Akses Terkontrol",
-                "adv2-desc": "Manajemen isolasi data berbasis sesi dan perlindungan autentikasi yang aman.",
-
-                "about-title": "Mengenai Perusahaan",
-                "about-desc": "VISAwork dikembangkan sebagai solusi perangkat lunak mandiri untuk penataan administrasi keuangan yang transparan, terstruktur, dan terukur. Kami percaya bahwa setiap bisnis membutuhkan fondasi pencatatan yang solid untuk bisa bertumbuh.",
-                "about-list1": "Misi mempermudah pembukuan",
-                "about-list2": "Dukungan teknis berkelanjutan",
-                "about-btn": "Kenali Kami Lebih Lanjut",
-
-                "footer-text": "VISAwork v1.1.0 &copy; 2026. Hak Cipta Dilindungi."
-            },
-            en: {
-                "nav-fitur": "Features",
-                "nav-solusi": "Solutions",
-                "nav-harga": "Pricing",
-                "nav-panduan": "Guides",
-                "nav-perusahaan": "Company",
-                "nav-login": "Sign In",
-                "nav-register": "Create Account",
-                
-                "hero-badge": "Development Phase v1.1.0",
-                "hero-title": "Manage Finances<br class='hidden sm:block'><span class='font-bold text-gray-800'>With VISAwork</span>",
-                "hero-desc": "Financial summaries, cash flows, and inventory tracking in a clean, fast, and organized interface without the hassle.",
-                "btn-start": "Get Started",
-                "btn-learn": "Learn Features",
-
-                "feat-title": "Core Platform Features",
-                "feat-desc": "Designed to simplify your daily recording and operations.",
-                "feat1-badge": "Main Module",
-                "feat1-title": "Accounting & Cash Flow",
-                "feat1-desc": "Automated balance management, debit/credit transaction tracking, and structured daily reporting.",
-                "feat2-badge": "Inventory",
-                "feat2-title": "Product Management",
-                "feat2-desc": "Control inbound and outbound stock, adjust selling prices, and monitor real-time inventory.",
-
-                "adv-title": "Platform Advantages",
-                "adv-desc": "Designed for high efficiency without excessive computational load.",
-                "adv1-title": "Responsive Performance",
-                "adv1-desc": "Loads lightweight even on limited connections thanks to an optimized architecture.",
-                "adv2-title": "Controlled Access",
-                "adv2-desc": "Session-based data isolation management and secure authentication protection.",
-
-                "about-title": "About The Company",
-                "about-desc": "VISAwork was developed as an independent software solution for transparent, structured, and measurable financial administration. We believe every business needs a solid recording foundation to grow.",
-                "about-list1": "Mission to simplify bookkeeping",
-                "about-list2": "Continuous technical support",
-                "about-btn": "Get to Know Us Better",
-
-                "footer-text": "VISAwork v1.1.0 &copy; 2026. All Rights Reserved."
-            }
-        };
-
-        function changeLanguage(lang) {
-            // Simpan ke localStorage agar tidak lupa saat pindah halaman
-            localStorage.setItem('visawork_lang', lang);
-
-            // Update tulisan di UI
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if(translations[lang][key]) {
-                    element.innerHTML = translations[lang][key];
-                }
-            });
-
-            // Update label bahasa di Navbar
-            document.getElementById('current-lang').innerText = lang.toUpperCase();
-            
-            // Ubah atribut lang di tag html
-            document.documentElement.lang = lang;
-        }
-
-        // Jalankan otomatis saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('visawork_lang') || 'id';
-            changeLanguage(savedLang);
-        });
-    </script>
+    <!-- SCRIPT MULTI-BAHASA TERPUSAT -->
+    <script src="{{ asset('js/translations.js') }}"></script>
 </body>
 </html>

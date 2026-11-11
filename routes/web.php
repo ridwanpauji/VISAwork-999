@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,22 +17,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Halaman Dasbor Utama
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // Halaman yang Membutuhkan Autentikasi User
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // Halaman Dasbor Utama
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Modul Transaksi (Pencatatan Arus Kas)
-    Route::get('/transactions', function () {
-        return view('transactions.index');
-    })->name('transactions.index');
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
+    Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 
-    Route::get('/inventory', function () {
-        return view('inventory.index');
-    })->name('inventory.index');
+    // Modul Inventaris & Produk
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::put('/inventory/{product}', [InventoryController::class, 'update'])->name('inventory.update');
+    Route::delete('/inventory/{product}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 
     // Manajemen Profil User
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

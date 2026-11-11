@@ -14,7 +14,7 @@
             </div>
             
             <!-- Tombol Tambah Produk -->
-            <button onclick="openInvModal()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition shadow-sm">
+            <button onclick="openInvModal()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition shadow-sm cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 <span data-i18n="btn-add-prod">Tambah Produk</span>
             </button>
@@ -23,13 +23,35 @@
 
     <div class="py-8 font-inter bg-[#F8F9FA] min-h-[calc(100vh-140px)]">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+            <!-- Flash Alert -->
+            @if(session('success'))
+                <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-800 font-bold">&times;</button>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm shadow-sm">
+                    <p class="font-semibold mb-1">Ada kesalahan penginputan:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             
             <!-- RINGKASAN STOK CARDS -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <div data-i18n="card-total-item" class="text-xs font-medium text-gray-500 mb-1">Total Jenis Produk</div>
-                        <div class="text-2xl font-bold text-gray-900">18 Item</div>
+                        <div class="text-2xl font-bold text-gray-900">{{ $totalItems }} Item</div>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
@@ -39,7 +61,7 @@
                 <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <div data-i18n="card-low-stock" class="text-xs font-medium text-gray-500 mb-1">Stok Menipis (&lt; 5)</div>
-                        <div class="text-2xl font-bold text-orange-600">2 Produk</div>
+                        <div class="text-2xl font-bold {{ $lowStockCount > 0 ? 'text-orange-600' : 'text-gray-900' }}">{{ $lowStockCount }} Produk</div>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
@@ -49,7 +71,7 @@
                 <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex items-center justify-between">
                     <div>
                         <div data-i18n="card-asset-val" class="text-xs font-medium text-gray-500 mb-1">Estimasi Nilai Aset</div>
-                        <div class="text-2xl font-bold text-gray-900">Rp 42.800.000</div>
+                        <div class="text-2xl font-bold text-gray-900">Rp {{ number_format($totalAssetValue, 0, ',', '.') }}</div>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -60,19 +82,27 @@
             <!-- TABEL DATA PRODUK -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 
-                <!-- SEARCH BAR -->
+                <!-- SEARCH BAR & FILTER -->
                 <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="relative w-full md:w-80">
-                        <input type="text" placeholder="Cari nama produk / SKU..." class="w-full pl-9 pr-4 py-2 text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
+                    <form method="GET" action="{{ route('inventory.index') }}" class="relative w-full md:w-80">
+                        @if(request('category'))
+                            <input type="hidden" name="category" value="{{ request('category') }}">
+                        @endif
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama produk / SKU..." class="w-full pl-9 pr-4 py-2 text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
                         <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
+                    </form>
 
-                    <select class="w-full md:w-48 text-sm border-gray-200 text-gray-600 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
-                        <option value="">Semua Kategori</option>
-                        <option value="hardware">Elektronik / Hardware</option>
-                        <option value="software">Lisensi Software</option>
-                        <option value="office">Peralatan Kantor</option>
-                    </select>
+                    <form method="GET" action="{{ route('inventory.index') }}" class="w-full md:w-auto">
+                        @if(request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        <select name="category" onchange="this.form.submit()" class="w-full md:w-48 text-sm border-gray-200 text-gray-600 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
+                            <option value="">Semua Kategori</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                            @endforeach
+                        </select>
+                    </form>
                 </div>
 
                 <!-- TABEL DATA -->
@@ -89,49 +119,55 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 text-gray-700">
-                            
-                            <!-- Item 1 -->
-                            <tr class="hover:bg-gray-50/50 transition">
-                                <td class="py-4 px-6 text-xs font-mono text-gray-500">PRD-001</td>
-                                <td class="py-4 px-6 font-medium text-gray-900">Monitor IPS 24 Inch Enterprise</td>
-                                <td class="py-4 px-6"><span class="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">Elektronik</span></td>
-                                <td class="py-4 px-6 text-right font-semibold text-gray-900">Rp 2.100.000</td>
-                                <td class="py-4 px-6 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
-                                        12 Unit
-                                    </span>
-                                </td>
-                                <td class="py-4 px-6 text-center">
-                                    <button onclick="showDevAlert('Edit Produk')" class="text-gray-400 hover:text-emerald-600 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
-                                </td>
-                            </tr>
-
-                            <!-- Item 2 (Stok Menipis) -->
-                            <tr class="hover:bg-gray-50/50 transition">
-                                <td class="py-4 px-6 text-xs font-mono text-gray-500">PRD-002</td>
-                                <td class="py-4 px-6 font-medium text-gray-900">Mechanical Keyboard Silent Red</td>
-                                <td class="py-4 px-6"><span class="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">Aksesoris</span></td>
-                                <td class="py-4 px-6 text-right font-semibold text-gray-900">Rp 850.000</td>
-                                <td class="py-4 px-6 text-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-50 text-orange-700 border border-orange-100">
-                                        3 Unit (Menipis)
-                                    </span>
-                                </td>
-                                <td class="py-4 px-6 text-center">
-                                    <button onclick="showDevAlert('Edit Produk')" class="text-gray-400 hover:text-emerald-600 p-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
-                                </td>
-                            </tr>
-
+                            @forelse($products as $product)
+                                <tr class="hover:bg-gray-50/50 transition">
+                                    <td class="py-4 px-6 text-xs font-mono text-gray-500">{{ $product->sku ?? ('PRD-' . $product->id) }}</td>
+                                    <td class="py-4 px-6 font-medium text-gray-900">{{ $product->name }}</td>
+                                    <td class="py-4 px-6"><span class="px-2.5 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">{{ $product->category ?? 'Umum' }}</span></td>
+                                    <td class="py-4 px-6 text-right font-semibold text-gray-900">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                                    <td class="py-4 px-6 text-center">
+                                        @if($product->stock < 5)
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-50 text-orange-700">
+                                                {{ $product->stock }} Unit
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+                                                {{ $product->stock }} Unit
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="py-4 px-6 text-center">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <button onclick="openEditInvModal({{ json_encode($product) }})" class="text-gray-400 hover:text-emerald-600 p-1" title="Edit">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                            </button>
+                                            <form action="{{ route('inventory.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-gray-400 hover:text-rose-600 p-1" title="Hapus">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="py-12 text-center text-gray-400">
+                                        <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                        Belum ada produk terdaftar. Klik tombol "Tambah Produk" untuk memulai.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
 
-                <!-- PAGINATION -->
-                <div class="p-4 border-t border-gray-100 flex justify-between items-center text-xs text-gray-500">
-                    <span data-i18n="pagination-info-inv">Menampilkan 2 dari 18 produk</span>
-                    <div class="flex gap-1">
-                        <button data-i18n="btn-prev" class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-50" disabled>Sebelumnya</button>
-                        <button data-i18n="btn-next" class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-50" disabled>Selanjutnya</button>
+                <!-- FOOTER TABEL / PAGINATION -->
+                <div class="p-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-3">
+                    <span>Menampilkan {{ $products->firstItem() ?? 0 }} - {{ $products->lastItem() ?? 0 }} dari {{ $products->total() }} produk</span>
+                    <div>
+                        {{ $products->links() }}
                     </div>
                 </div>
 
@@ -139,169 +175,92 @@
         </div>
     </div>
 
-    <!-- MODAL FORM TAMBAH PRODUK -->
+    <!-- MODAL FORM TAMBAH / EDIT PRODUK -->
     <div id="inv-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900/40 backdrop-blur-sm flex justify-center items-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-gray-100 relative font-inter">
             <div class="flex justify-between items-center mb-5">
-                <h3 data-i18n="modal-inv-title" class="text-lg font-semibold text-gray-900">Tambah Produk Baru</h3>
+                <h3 id="inv-modal-title" class="text-lg font-semibold text-gray-900">Tambah Produk Baru</h3>
                 <button onclick="closeInvModal()" class="text-gray-400 hover:text-gray-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
 
-            <form onsubmit="event.preventDefault(); showDevAlert('Simpan Produk'); closeInvModal();" class="space-y-4">
-                <!-- Kode SKU -->
-                <div>
-                    <label data-i18n="lbl-sku" class="block text-xs font-medium text-gray-700 mb-1">Kode Produk / SKU</label>
-                    <input type="text" placeholder="Contoh: PRD-003" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
-                </div>
+            <form id="inv-form" method="POST" action="{{ route('inventory.store') }}" class="space-y-4">
+                @csrf
+                <div id="inv-method-spoof"></div>
 
-                <!-- Nama Produk -->
-                <div>
-                    <label data-i18n="lbl-prod-name" class="block text-xs font-medium text-gray-700 mb-1">Nama Produk</label>
-                    <input type="text" placeholder="Masukkan nama barang" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
-                </div>
-
-                <!-- Harga & Stok (2 Kolom) -->
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label data-i18n="lbl-price" class="block text-xs font-medium text-gray-700 mb-1">Harga Jual (Rp)</label>
-                        <input type="number" placeholder="0" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
+                <!-- SKU & Nama -->
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="col-span-1">
+                        <label class="block text-xs font-medium text-gray-700 mb-1">SKU / Kode</label>
+                        <input type="text" name="sku" id="inv-sku" placeholder="PRD-001" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
                     </div>
-                    <div>
-                        <label data-i18n="lbl-stock" class="block text-xs font-medium text-gray-700 mb-1">Jumlah Stok Initial</label>
-                        <input type="number" placeholder="0" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Nama Produk</label>
+                        <input type="text" name="name" id="inv-name" placeholder="Nama barang" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
                     </div>
                 </div>
 
                 <!-- Kategori -->
                 <div>
-                    <label data-i18n="lbl-category" class="block text-xs font-medium text-gray-700 mb-1">Kategori</label>
-                    <select class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
-                        <option>Elektronik</option>
-                        <option>Aksesoris</option>
-                        <option>Lisensi Software</option>
-                        <option>Lain-Lain</option>
-                    </select>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">Kategori</label>
+                    <input type="text" list="inv-cat-options" name="category" id="inv-category" placeholder="Elektronik, ATK, Jasa, dll." class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
+                    <datalist id="inv-cat-options">
+                        <option value="Elektronik / Hardware">
+                        <option value="Lisensi Software">
+                        <option value="Peralatan Kantor">
+                        <option value="Konsumsi">
+                        <option value="Lain-Lain">
+                    </datalist>
                 </div>
 
-                <!-- Submit -->
+                <!-- Harga & Stok -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Harga Jual (Rp)</label>
+                        <input type="number" step="any" name="price" id="inv-price" placeholder="0" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">Stok Awal</label>
+                        <input type="number" name="stock" id="inv-stock" placeholder="0" class="w-full text-sm border-gray-200 rounded-lg focus:ring-emerald-500 focus:border-emerald-500" required>
+                    </div>
+                </div>
+
+                <!-- Tombol Submit -->
                 <div class="pt-3 flex gap-3">
-                    <button type="button" onclick="closeInvModal()" data-i18n="btn-cancel" class="w-1/2 py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Batal</button>
-                    <button type="submit" data-i18n="btn-save" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow-sm">Simpan</button>
+                    <button type="button" onclick="closeInvModal()" class="w-1/2 py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 cursor-pointer">Batal</button>
+                    <button type="submit" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium shadow-sm cursor-pointer">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ELEMEN TOAST NOTIFIKASI -->
-    <div id="dev-toast" class="fixed bottom-5 right-5 transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center w-full max-w-xs p-4 space-x-3 text-gray-600 bg-white rounded-xl shadow-lg border border-gray-100" role="alert">
-        <div class="inline-flex items-center justify-center shrink-0 w-10 h-10 text-orange-500 bg-orange-100 rounded-lg">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        </div>
-        <div>
-            <div data-i18n="toast-dev" class="text-sm font-semibold text-gray-800">Tahap Pengembangan</div>
-            <div class="text-xs text-gray-500 mt-0.5">Aksi <span id="toast-feature-name" class="font-medium text-gray-700"></span> simulasi UI.</div>
-        </div>
-    </div>
-
-    <!-- SCRIPT MULTI-BAHASA & EVENT HANDLER -->
+    <!-- SCRIPT EVENT HANDLER -->
     <script>
-        const translations = {
-            id: {
-                "nav-dashboard": "Dasbor",
-                "nav-transactions": "Transaksi",
-                "nav-inventory": "Inventaris",
-                "nav-profile": "Profil",
-                "nav-logout": "Keluar",
-                "inv-page-title": "Manajemen Produk & Stok",
-                "inv-page-sub": "Pantau inventaris barang, penyesuaian harga jual, dan ketersediaan stok.",
-                "btn-add-prod": "Tambah Produk",
-                "card-total-item": "Total Jenis Produk",
-                "card-low-stock": "Stok Menipis (< 5)",
-                "card-asset-val": "Estimasi Nilai Aset",
-                "th-sku": "SKU / Kode",
-                "th-prod-name": "Nama Produk",
-                "th-cat": "Kategori",
-                "th-price": "Harga Jual",
-                "th-stock": "Sisa Stok",
-                "th-action": "Aksi",
-                "pagination-info-inv": "Menampilkan 2 dari 18 produk",
-                "btn-prev": "Sebelumnya",
-                "btn-next": "Selanjutnya",
-                "modal-inv-title": "Tambah Produk Baru",
-                "lbl-sku": "Kode Produk / SKU",
-                "lbl-prod-name": "Nama Produk",
-                "lbl-price": "Harga Jual (Rp)",
-                "lbl-stock": "Jumlah Stok Initial",
-                "lbl-category": "Kategori",
-                "btn-cancel": "Batal",
-                "btn-save": "Simpan",
-                "toast-dev": "Tahap Pengembangan"
-            },
-            en: {
-                "nav-dashboard": "Dashboard",
-                "nav-transactions": "Transactions",
-                "nav-inventory": "Inventory",
-                "nav-profile": "Profile",
-                "nav-logout": "Log Out",
-                "inv-page-title": "Product & Stock Management",
-                "inv-page-sub": "Monitor item inventory, selling price adjustments, and stock availability.",
-                "btn-add-prod": "Add Product",
-                "card-total-item": "Total Product Types",
-                "card-low-stock": "Low Stock (< 5)",
-                "card-asset-val": "Estimated Asset Value",
-                "th-sku": "SKU / Code",
-                "th-prod-name": "Product Name",
-                "th-cat": "Category",
-                "th-price": "Selling Price",
-                "th-stock": "Remaining Stock",
-                "th-action": "Action",
-                "pagination-info-inv": "Showing 2 of 18 products",
-                "btn-prev": "Previous",
-                "btn-next": "Next",
-                "modal-inv-title": "Add New Product",
-                "lbl-sku": "Product Code / SKU",
-                "lbl-prod-name": "Product Name",
-                "lbl-price": "Selling Price (Rp)",
-                "lbl-stock": "Initial Stock Quantity",
-                "lbl-category": "Category",
-                "btn-cancel": "Cancel",
-                "btn-save": "Save",
-                "toast-dev": "Development Phase"
-            }
-        };
+        function openInvModal() { 
+            const form = document.getElementById('inv-form');
+            form.action = "{{ route('inventory.store') }}";
+            document.getElementById('inv-method-spoof').innerHTML = '';
+            document.getElementById('inv-modal-title').innerText = 'Tambah Produk Baru';
+            document.getElementById('inv-sku').value = '';
+            document.getElementById('inv-name').value = '';
+            document.getElementById('inv-category').value = '';
+            document.getElementById('inv-price').value = '';
+            document.getElementById('inv-stock').value = '';
+            document.getElementById('inv-modal').classList.remove('hidden'); 
+        }
 
-        function openInvModal() { document.getElementById('inv-modal').classList.remove('hidden'); }
+        function openEditInvModal(product) {
+            const form = document.getElementById('inv-form');
+            form.action = `/inventory/${product.id}`;
+            document.getElementById('inv-method-spoof').innerHTML = '<input type="hidden" name="_method" value="PUT">';
+            document.getElementById('inv-modal-title').innerText = 'Edit Produk';
+            document.getElementById('inv-sku').value = product.sku || '';
+            document.getElementById('inv-name').value = product.name;
+            document.getElementById('inv-category').value = product.category || '';
+            document.getElementById('inv-price').value = product.price;
+            document.getElementById('inv-stock').value = product.stock;
+            document.getElementById('inv-modal').classList.remove('hidden');
+        }
+
         function closeInvModal() { document.getElementById('inv-modal').classList.add('hidden'); }
-
-        let toastTimeout;
-        function showDevAlert(featureName) {
-            const toast = document.getElementById('dev-toast');
-            document.getElementById('toast-feature-name').innerText = `"${featureName}"`;
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
-        }
-
-        function changeLanguage(lang) {
-            localStorage.setItem('visawork_lang', lang);
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if(translations[lang] && translations[lang][key]) {
-                    element.innerHTML = translations[lang][key];
-                }
-            });
-            const currentLangEl = document.getElementById('current-lang');
-            if(currentLangEl) currentLangEl.innerText = lang.toUpperCase();
-            document.documentElement.lang = lang;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('visawork_lang') || 'id';
-            changeLanguage(savedLang);
-        });
     </script>
 </x-app-layout>

@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -10,66 +13,87 @@ class FinanceSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = DB::table('users')
-            ->where('email', 'admin@visawork.com')
-            ->first();
+        $users = User::all();
 
-        // Metode pembayaran
-        $paymentId = (string) Str::uuid();
+        foreach ($users as $user) {
+            // Seed transactions jika kosong
+            if (Transaction::where('user_id', $user->id)->count() === 0) {
+                // Transaksi beberapa hari terakhir agar grafik dinamis & estetik
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'income',
+                    'amount' => 3500000,
+                    'description' => 'Pembayaran Proyek Pembuatan Aplikasi',
+                    'category' => 'Penjualan / Jasa',
+                    'transaction_date' => now()->subDays(4)->toDateString(),
+                ]);
 
-        DB::table('payments')->insert([
-            'id' => $paymentId,
-            'user_id' => $user->id,
-            'name' => 'Bank BCA',
-            'type' => 'Bank',
-            'account_number' => '1234567890',
-            'account_owner' => 'Admin VISAwork',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'expense',
+                    'amount' => 450000,
+                    'description' => 'Langganan Cloud Server & Database',
+                    'category' => 'Operasional',
+                    'transaction_date' => now()->subDays(3)->toDateString(),
+                ]);
 
-        // Pemasukan
-        DB::table('incomes')->insert([
-            'id' => (string) Str::uuid(),
-            'user_id' => $user->id,
-            'source_id' => (string) Str::uuid(),
-            'date' => now()->toDateString(),
-            'nominal' => 5000000,
-            'notes' => 'Gaji Bulanan',
-            'month' => now()->format('F'),
-            'year' => now()->year,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'income',
+                    'amount' => 2000000,
+                    'description' => 'Retainer Bulanan Client B',
+                    'category' => 'Penjualan / Jasa',
+                    'transaction_date' => now()->subDays(1)->toDateString(),
+                ]);
 
-        // Pengeluaran
-        DB::table('expenses')->insert([
-            'id' => (string) Str::uuid(),
-            'user_id' => $user->id,
-            'date' => now()->toDateString(),
-            'description' => 'Kebutuhan Bulanan',
-            'nominal' => 1500000,
-            'type' => 'Kebutuhan',
-            'type_detail_id' => (string) Str::uuid(),
-            'payment_id' => $paymentId,
-            'notes' => 'Pengeluaran bulanan',
-            'month' => now()->format('F'),
-            'year' => now()->year,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'expense',
+                    'amount' => 300000,
+                    'description' => 'Bahan Baku & Logistik Kantor',
+                    'category' => 'Operasional',
+                    'transaction_date' => now()->toDateString(),
+                ]);
 
-        // Anggaran
-        DB::table('budgets')->insert([
-            'id' => (string) Str::uuid(),
-            'user_id' => $user->id,
-            'detail' => 'Kebutuhan Bulanan',
-            'nominal' => 2000000,
-            'month' => now()->format('F'),
-            'year' => now()->year,
-            'type' => 'Kebutuhan',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+                Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'income',
+                    'amount' => 1250000,
+                    'description' => 'Penjualan Lisensi Software Addon',
+                    'category' => 'Penjualan / Jasa',
+                    'transaction_date' => now()->toDateString(),
+                ]);
+            }
+
+            // Seed produk jika kosong
+            if (Product::where('user_id', $user->id)->count() === 0) {
+                Product::create([
+                    'user_id' => $user->id,
+                    'sku' => 'PRD-001',
+                    'name' => 'Monitor IPS 24 Inch Enterprise',
+                    'category' => 'Elektronik / Hardware',
+                    'price' => 2100000,
+                    'stock' => 8,
+                ]);
+
+                Product::create([
+                    'user_id' => $user->id,
+                    'sku' => 'PRD-002',
+                    'name' => 'Mechanical Keyboard Pro',
+                    'category' => 'Peralatan Kantor',
+                    'price' => 750000,
+                    'stock' => 3,
+                ]);
+
+                Product::create([
+                    'user_id' => $user->id,
+                    'sku' => 'PRD-003',
+                    'name' => 'Lisensi VISAwork Enterprise 1 Tahun',
+                    'category' => 'Lisensi Software',
+                    'price' => 1500000,
+                    'stock' => 25,
+                ]);
+            }
+        }
     }
 }
