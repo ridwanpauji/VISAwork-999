@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
     Route::put('/inventory/{product}', [InventoryController::class, 'update'])->name('inventory.update');
     Route::delete('/inventory/{product}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
+
+    // Modul Laporan Keuangan
+    Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan-keuangan/pdf', [LaporanKeuanganController::class, 'downloadPdf'])->name('laporan.download-pdf');
+    Route::get('/laporan-keuangan/excel', [LaporanKeuanganController::class, 'downloadExcel'])->name('laporan.download-excel');
 
     // Manajemen Profil User
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

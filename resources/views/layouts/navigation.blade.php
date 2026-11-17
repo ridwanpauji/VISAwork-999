@@ -21,6 +21,10 @@
                         <span data-i18n="nav-transactions">Transaksi</span>
                     </x-nav-link>
 
+                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.*')" class="focus:border-emerald-500 hover:border-emerald-300">
+                        <span>Laporan Keuangan</span>
+                    </x-nav-link>
+
                     <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')" class="focus:border-emerald-500 hover:border-emerald-300">
                         <span data-i18n="nav-inventory">Inventaris</span>
                     </x-nav-link>
@@ -102,6 +106,10 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
                 <span data-i18n="nav-transactions">Transaksi</span>
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.*')">
+                <span>Laporan Keuangan</span>
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')">
